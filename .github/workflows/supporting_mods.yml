@@ -42,15 +42,15 @@ jobs:
         import os
         import re
         from collections import defaultdict
-        from functools import cmp_to_key
+        from packaging import version
 
-        def version_key(version):
-            return [int(x) for x in re.sub(r'[^0-9.]', '', version).split('.')]
-
-        def compare_versions(v1, v2):
-            v1_parts = version_key(v1)
-            v2_parts = version_key(v2)
-            return (v1_parts > v2_parts) - (v1_parts < v2_parts)
+        def parse_version(v):
+            try:
+                # Удаляем нечисловые префиксы/суффиксы (Fabric, Forge и т.д.)
+                clean_v = re.sub(r'[^0-9.]', '', v.split('-')[0].split('+')[0])
+                return version.parse(clean_v)
+            except:
+                return version.parse("0")
 
         with open('list.json') as f:
             supported_hashes = set(json.load(f)['lists'])
@@ -78,11 +78,15 @@ jobs:
         markdown += "|----------|--------------------|\n"
 
         for name in sorted(mods_data.keys(), key=lambda x: x.lower()):
-            versions = sorted(
-                list(set(mods_data[name])),
-                key=cmp_to_key(lambda x, y: compare_versions(y, x))
+            # Удаляем дубликаты и сортируем версии
+            unique_versions = list(set(mods_data[name]))
+            # Сортируем версии с учетом их семантического значения
+            sorted_versions = sorted(
+                unique_versions,
+                key=parse_version,
+                reverse=True
             )
-            versions_str = ", ".join(versions)
+            versions_str = ", ".join(sorted_versions)
             markdown += f"| {name} | {versions_str} |\n"
 
         with open('SUPPORTED_MODS.md', 'w', encoding='utf-8') as f:
@@ -90,6 +94,9 @@ jobs:
         
         print(f"Generated table with {len(mods_data)} mods")
         EOF
+
+    - name: Install packaging
+      run: pip install packaging
 
     - name: Verify and commit changes
       run: |
@@ -99,7 +106,7 @@ jobs:
         fi
         
         echo "Generated file preview:"
-        head -n 10 SUPPORTED_MODS.md
+        head -n 20 SUPPORTED_MODS.md
 
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
@@ -108,7 +115,7 @@ jobs:
         if git diff-index --quiet HEAD --; then
           echo "No changes to commit"
         else
-          git commit -m "Auto-update: Supported Mods Table (sorted by version) [skip ci]"
+          git commit -m "Auto-update: Supported Mods Table (proper version sorting) [skip ci]"
           git pull --rebase
           git push origin HEAD:${{ github.event.inputs.branch || 'main' }}
           echo "Changes pushed successfully"
