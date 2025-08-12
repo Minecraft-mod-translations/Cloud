@@ -34,6 +34,9 @@ jobs:
       with:
         python-version: '3.10'
 
+    - name: Install Python dependencies
+      run: pip install packaging
+
     - name: Generate sorted mods table
       id: generate
       run: |
@@ -46,7 +49,10 @@ jobs:
 
         def parse_version(v):
             try:
-                # Удаляем нечисловые префиксы/суффиксы (Fabric, Forge и т.д.)
+                # Обрабатываем версии типа "1.16.4 - 1.16.5"
+                if ' - ' in v:
+                    v = v.split(' - ')[-1]
+                # Удаляем нечисловые префиксы/суффиксы
                 clean_v = re.sub(r'[^0-9.]', '', v.split('-')[0].split('+')[0])
                 return version.parse(clean_v)
             except:
@@ -78,9 +84,7 @@ jobs:
         markdown += "|----------|--------------------|\n"
 
         for name in sorted(mods_data.keys(), key=lambda x: x.lower()):
-            # Удаляем дубликаты и сортируем версии
             unique_versions = list(set(mods_data[name]))
-            # Сортируем версии с учетом их семантического значения
             sorted_versions = sorted(
                 unique_versions,
                 key=parse_version,
@@ -94,9 +98,6 @@ jobs:
         
         print(f"Generated table with {len(mods_data)} mods")
         EOF
-
-    - name: Install packaging
-      run: pip install packaging
 
     - name: Verify and commit changes
       run: |
