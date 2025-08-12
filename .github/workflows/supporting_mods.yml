@@ -34,7 +34,7 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Generate sorted mods table
+    - name: Generate properly sorted mods table
       id: generate
       run: |
         python - <<EOF
@@ -43,20 +43,20 @@ jobs:
         import re
         from collections import defaultdict
 
-        def version_key(v):
-            # Преобразуем версию в список чисел для сортировки
+        def version_tuple(v):
+            """Convert version string to comparable tuple"""
             v = str(v)
-            # Удаляем нечисловые символы (Fabric, Forge и т.д.)
+            # Remove non-numeric prefixes/suffixes
             clean_v = re.sub(r'[^0-9.]', '', v.split('-')[0].split('+')[0])
-            # Разбиваем на компоненты и преобразуем в числа
+            # Split into components and convert to integers
             parts = []
             for part in clean_v.split('.'):
                 try:
                     parts.append(int(part))
                 except:
                     parts.append(0)
-            # Добавляем достаточно нулей для правильного сравнения
-            while len(parts) < 4:
+            # Pad with zeros for consistent comparison
+            while len(parts) < 3:
                 parts.append(0)
             return tuple(parts)
 
@@ -77,7 +77,11 @@ jobs:
                     if 'name' in mod_data and 'version' in mod_data:
                         file_hash = os.path.basename(mod_file).replace('.json', '')
                         if file_hash in supported_hashes:
-                            mods_data[mod_data['name']].append(mod_data['version'])
+                            # Store both original and parsed version
+                            mods_data[mod_data['name']].append({
+                                'original': mod_data['version'],
+                                'parsed': version_tuple(mod_data['version'])
+                            })
             except Exception as e:
                 print(f"Skipping {mod_file}: {str(e)}")
 
@@ -86,12 +90,17 @@ jobs:
         markdown += "|----------|--------------------|\n"
 
         for name in sorted(mods_data.keys(), key=lambda x: x.lower()):
-            # Удаляем дубликаты и сортируем версии
-            unique_versions = list(set(mods_data[name]))
-            # Сортируем по убыванию (новые версии первыми)
+            # Get unique versions and sort by parsed version (newest first)
+            unique_versions = {}
+            for item in mods_data[name]:
+                ver = item['original']
+                if ver not in unique_versions or item['parsed'] > version_tuple(unique_versions[ver]):
+                    unique_versions[ver] = item['original']
+            
+            # Sort versions from newest to oldest
             sorted_versions = sorted(
-                unique_versions,
-                key=version_key,
+                unique_versions.keys(),
+                key=lambda x: version_tuple(x),
                 reverse=True
             )
             versions_str = ", ".join(sorted_versions)
@@ -101,10 +110,15 @@ jobs:
             f.write(markdown)
         
         print(f"Generated table with {len(mods_data)} mods")
-        print("Sample sorted versions:")
-        for name in list(mods_data.keys())[:5]:
-            versions = sorted(list(set(mods_data[name])), key=version_key, reverse=True)
-            print(f"{name}: {versions}")
+        print("\nSample sorted versions:")
+        sample_mods = list(mods_data.keys())[:5]
+        for mod in sample_mods:
+            versions = sorted(
+                list({v['original'] for v in mods_data[mod]}),
+                key=version_tuple,
+                reverse=True
+            )
+            print(f"{mod}: {versions}")
         EOF
 
     - name: Verify and commit changes
@@ -114,7 +128,7 @@ jobs:
           exit 1
         fi
         
-        echo "Generated file preview:"
+        echo "Generated file preview (first 20 lines):"
         head -n 20 SUPPORTED_MODS.md
 
         git config --global user.name "GitHub Actions"
@@ -124,7 +138,7 @@ jobs:
         if git diff-index --quiet HEAD --; then
           echo "No changes to commit"
         else
-          git commit -m "Auto-update: Supported Mods Table (correct version sorting) [skip ci]"
+          git commit -m "Auto-update: Supported Mods Table (fixed version sorting) [skip ci]"
           git pull --rebase
           git push origin HEAD:${{ github.event.inputs.branch || 'main' }}
           echo "Changes pushed successfully"
