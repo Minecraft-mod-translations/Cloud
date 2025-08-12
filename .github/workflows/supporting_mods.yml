@@ -18,12 +18,16 @@ on:
 jobs:
   generate-mods-table:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.inputs.branch || 'main' }}
         fetch-depth: 0
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -38,18 +42,15 @@ jobs:
         import os
         from collections import defaultdict
 
-        # Load the list of supported mod hashes
         with open('list.json') as f:
             supported_hashes = set(json.load(f)['lists'])
 
-        # Find all JSON files in the repository (excluding list.json)
         mod_files = []
         for root, dirs, files in os.walk('.'):
             for file in files:
-                if file.endswith('.json') and file != 'list.json' and not file.startswith('.'):
+                if file.endswith('.json') and file != 'list.json':
                     mod_files.append(os.path.join(root, file))
 
-        # Process all mod files
         mods_data = defaultdict(list)
         for mod_file in mod_files:
             try:
@@ -59,37 +60,42 @@ jobs:
                         file_hash = os.path.basename(mod_file).replace('.json', '')
                         if file_hash in supported_hashes:
                             mods_data[mod_data['name']].append(mod_data['version'])
-            except (json.JSONDecodeError, UnicodeDecodeError) as e:
+            except Exception as e:
                 print(f"Skipping {mod_file}: {str(e)}")
-                continue
 
-        # Generate markdown table
-        markdown = "## Supported Mods\n\n"
-        markdown += "| Mod Name | Supported Versions |\n"
-        markdown += "|----------|--------------------|\n"
-        
+        markdown = "## Supported Mods\n\n| Mod Name | Supported Versions |\n|----------|--------------------|\n"
         for name, versions in sorted(mods_data.items()):
             versions_str = ", ".join(sorted(set(versions)))
             markdown += f"| {name} | {versions_str} |\n"
 
-        # Write to file
         with open('SUPPORTED_MODS.md', 'w', encoding='utf-8') as f:
             f.write(markdown)
         
         print(f"Generated table with {len(mods_data)} mods")
         EOF
 
+    - name: Verify file exists
+      run: |
+        if [ ! -f "SUPPORTED_MODS.md" ]; then
+          echo "::error::SUPPORTED_MODS.md was not generated!"
+          exit 1
+        else
+          echo "File SUPPORTED_MODS.md exists"
+          cat SUPPORTED_MODS.md
+        fi
+
     - name: Commit and push changes
       run: |
-        # Устанавливаем пользователя Git
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "GitHub Actions"
+        git config --global user.email "actions@github.com"
         
-        # Добавляем файл
         git add SUPPORTED_MODS.md
         
-        # Коммитим изменения
-        git commit -m "Auto-update: Supported Mods Table [skip ci]" || echo "No changes to commit"
-        
-        # Пушим изменения, используя токен
-        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:${{ github.event.inputs.branch || 'main' }} || echo "Push failed"
+        if git diff-index --quiet HEAD --; then
+          echo "No changes to commit"
+        else
+          git commit -m "Auto-update: Supported Mods Table [skip ci]"
+          git pull --rebase
+          git push origin HEAD:${{ github.event.inputs.branch || 'main' }}
+          echo "Changes pushed successfully"
+        fi
