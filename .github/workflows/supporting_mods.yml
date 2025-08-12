@@ -23,7 +23,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.inputs.branch || 'main' }}
-        fetch-depth: 0  # Полная история коммитов для корректной работы git diff
+        fetch-depth: 0
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -79,15 +79,26 @@ jobs:
         print(f"Generated table with {len(mods_data)} mods")
         EOF
 
-    - name: Commit and push changes
+    - name: Add and commit changes
       run: |
-        # Проверяем, есть ли изменения
-        if git diff --quiet --exit-code; then
-          echo "No changes to commit"
-        else
+        # Проверяем существование файла
+        if [ -f "SUPPORTED_MODS.md" ]; then
+          echo "File SUPPORTED_MODS.md exists, proceeding with commit"
+          
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          
           git add SUPPORTED_MODS.md
-          git commit -m "Auto-update: Supported Mods Table [skip ci]"
-          git push
+          
+          # Проверяем есть ли изменения для коммита
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update: Supported Mods Table [skip ci]"
+            git push
+            echo "Changes committed and pushed"
+          fi
+        else
+          echo "Error: SUPPORTED_MODS.md was not generated!"
+          exit 1
         fi
