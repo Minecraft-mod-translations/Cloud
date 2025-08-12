@@ -1,4 +1,4 @@
-name: Generate Mods Table
+name: Generate and Commit Mods Table
 
 on:
   workflow_dispatch:
@@ -11,11 +11,6 @@ on:
         options:
           - main
           - develop
-      force_update:
-        description: 'Force update even if no JSON changes'
-        required: false
-        default: 'false'
-        type: boolean
   push:
     branches: [ main ]
     paths: [ '**.json' ]
@@ -28,6 +23,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: ${{ github.event.inputs.branch || 'main' }}
+        fetch-depth: 0  # Полная история коммитов для корректной работы git diff
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -35,6 +31,7 @@ jobs:
         python-version: '3.10'
 
     - name: Generate mods table
+      id: generate
       run: |
         python - <<EOF
         import json
@@ -49,7 +46,7 @@ jobs:
         mod_files = []
         for root, dirs, files in os.walk('.'):
             for file in files:
-                if file.endswith('.json') and file != 'list.json':
+                if file.endswith('.json') and file != 'list.json' and not file.startswith('.'):
                     mod_files.append(os.path.join(root, file))
 
         # Process all mod files
@@ -62,7 +59,8 @@ jobs:
                         file_hash = os.path.basename(mod_file).replace('.json', '')
                         if file_hash in supported_hashes:
                             mods_data[mod_data['name']].append(mod_data['version'])
-            except json.JSONDecodeError:
+            except (json.JSONDecodeError, UnicodeDecodeError) as e:
+                print(f"Skipping {mod_file}: {str(e)}")
                 continue
 
         # Generate markdown table
@@ -71,21 +69,25 @@ jobs:
         markdown += "|----------|--------------------|\n"
         
         for name, versions in sorted(mods_data.items()):
-            versions_str = ", ".join(sorted(set(versions)))  # Remove duplicates and sort
+            versions_str = ", ".join(sorted(set(versions)))
             markdown += f"| {name} | {versions_str} |\n"
 
-        # Write to README.md or SUPPORTED_MODS.md
-        output_file = 'SUPPORTED_MODS.md'
-        with open(output_file, 'w') as f:
+        # Write to file
+        with open('SUPPORTED_MODS.md', 'w', encoding='utf-8') as f:
             f.write(markdown)
         
-        print(f"Generated mods table with {len(mods_data)} mods")
+        print(f"Generated table with {len(mods_data)} mods")
         EOF
 
     - name: Commit and push changes
-      if: ${{ github.event_name == 'push' || github.event.inputs.force_update == 'true' }}
       run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "actions@github.com"
-        git add SUPPORTED_MODS.md
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update supported mods table" && git push)
+        # Проверяем, есть ли изменения
+        if git diff --quiet --exit-code; then
+          echo "No changes to commit"
+        else
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add SUPPORTED_MODS.md
+          git commit -m "Auto-update: Supported Mods Table [skip ci]"
+          git push
+        fi
