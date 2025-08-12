@@ -45,27 +45,22 @@ jobs:
         from functools import cmp_to_key
 
         def version_key(version):
-            # Преобразуем строку версии в список чисел для сравнения
             return [int(x) for x in re.sub(r'[^0-9.]', '', version).split('.')]
 
         def compare_versions(v1, v2):
-            # Функция сравнения двух версий
             v1_parts = version_key(v1)
             v2_parts = version_key(v2)
             return (v1_parts > v2_parts) - (v1_parts < v2_parts)
 
-        # Загрузка списка поддерживаемых хешей
         with open('list.json') as f:
             supported_hashes = set(json.load(f)['lists'])
 
-        # Поиск всех JSON файлов
         mod_files = []
         for root, _, files in os.walk('.'):
             for file in files:
                 if file.endswith('.json') and file != 'list.json':
                     mod_files.append(os.path.join(root, file))
 
-        # Обработка данных
         mods_data = defaultdict(list)
         for mod_file in mod_files:
             try:
@@ -78,21 +73,18 @@ jobs:
             except Exception as e:
                 print(f"Skipping {mod_file}: {str(e)}")
 
-        # Сортировка и генерация таблицы
         markdown = "## Supported Mods (Newest First)\n\n"
         markdown += "| Mod Name | Supported Versions |\n"
         markdown += "|----------|--------------------|\n"
 
-        # Сортируем моды по имени
         for name in sorted(mods_data.keys(), key=lambda x: x.lower()):
-            # Удаляем дубликаты и сортируем версии (новые версии первыми)
             versions = sorted(
-                set(mods_data[name]),
+                list(set(mods_data[name])),
                 key=cmp_to_key(lambda x, y: compare_versions(y, x))
+            )
             versions_str = ", ".join(versions)
             markdown += f"| {name} | {versions_str} |\n"
 
-        # Сохраняем файл
         with open('SUPPORTED_MODS.md', 'w', encoding='utf-8') as f:
             f.write(markdown)
         
@@ -101,17 +93,14 @@ jobs:
 
     - name: Verify and commit changes
       run: |
-        # Проверяем существование файла
         if [ ! -f "SUPPORTED_MODS.md" ]; then
           echo "::error::SUPPORTED_MODS.md was not generated!"
           exit 1
         fi
         
-        # Показываем первые 10 строк для проверки
         echo "Generated file preview:"
         head -n 10 SUPPORTED_MODS.md
 
-        # Настраиваем Git и коммитим
         git config --global user.name "GitHub Actions"
         git config --global user.email "actions@github.com"
         git add SUPPORTED_MODS.md
