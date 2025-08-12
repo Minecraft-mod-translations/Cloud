@@ -47,16 +47,11 @@ jobs:
         from collections import defaultdict
         from packaging import version
 
-        def parse_version(v):
-            try:
-                # Обрабатываем версии типа "1.16.4 - 1.16.5"
-                if ' - ' in v:
-                    v = v.split(' - ')[-1]
-                # Удаляем нечисловые префиксы/суффиксы
-                clean_v = re.sub(r'[^0-9.]', '', v.split('-')[0].split('+')[0])
-                return version.parse(clean_v)
-            except:
-                return version.parse("0")
+        def normalize_version(v):
+            # Обрабатываем специальные случаи
+            if v.lower().startswith(('fabric', 'forge')):
+                return re.sub(r'[^0-9.]', '', v)
+            return re.sub(r'[^0-9.]', '', v.split('-')[0].split('+')[0])
 
         with open('list.json') as f:
             supported_hashes = set(json.load(f)['lists'])
@@ -84,10 +79,11 @@ jobs:
         markdown += "|----------|--------------------|\n"
 
         for name in sorted(mods_data.keys(), key=lambda x: x.lower()):
-            unique_versions = list(set(mods_data[name]))
+            versions = list(set(mods_data[name]))
+            # Сортируем с учетом версий Minecraft
             sorted_versions = sorted(
-                unique_versions,
-                key=parse_version,
+                versions,
+                key=lambda x: version.parse(normalize_version(x)),
                 reverse=True
             )
             versions_str = ", ".join(sorted_versions)
@@ -97,6 +93,11 @@ jobs:
             f.write(markdown)
         
         print(f"Generated table with {len(mods_data)} mods")
+        print("Sample sorted versions:")
+        sample = {k: sorted(v, key=lambda x: version.parse(normalize_version(x)), reverse=True) 
+                 for k, v in list(mods_data.items())[:5]}
+        for k, v in sample.items():
+            print(f"{k}: {v}")
         EOF
 
     - name: Verify and commit changes
@@ -116,7 +117,7 @@ jobs:
         if git diff-index --quiet HEAD --; then
           echo "No changes to commit"
         else
-          git commit -m "Auto-update: Supported Mods Table (proper version sorting) [skip ci]"
+          git commit -m "Auto-update: Supported Mods Table (correct version sorting) [skip ci]"
           git pull --rebase
           git push origin HEAD:${{ github.event.inputs.branch || 'main' }}
           echo "Changes pushed successfully"
