@@ -1,4 +1,4 @@
-## Supported Mods
+## Supported Mods (Newest First)
 
 | Mod Name | Supported Versions |
 |----------|--------------------|
