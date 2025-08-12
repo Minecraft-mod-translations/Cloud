@@ -34,9 +34,6 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Install Python dependencies
-      run: pip install packaging
-
     - name: Generate sorted mods table
       id: generate
       run: |
@@ -45,13 +42,23 @@ jobs:
         import os
         import re
         from collections import defaultdict
-        from packaging import version
 
-        def normalize_version(v):
-            # Обрабатываем специальные случаи
-            if v.lower().startswith(('fabric', 'forge')):
-                return re.sub(r'[^0-9.]', '', v)
-            return re.sub(r'[^0-9.]', '', v.split('-')[0].split('+')[0])
+        def version_key(v):
+            # Преобразуем версию в список чисел для сортировки
+            v = str(v)
+            # Удаляем нечисловые символы (Fabric, Forge и т.д.)
+            clean_v = re.sub(r'[^0-9.]', '', v.split('-')[0].split('+')[0])
+            # Разбиваем на компоненты и преобразуем в числа
+            parts = []
+            for part in clean_v.split('.'):
+                try:
+                    parts.append(int(part))
+                except:
+                    parts.append(0)
+            # Добавляем достаточно нулей для правильного сравнения
+            while len(parts) < 4:
+                parts.append(0)
+            return tuple(parts)
 
         with open('list.json') as f:
             supported_hashes = set(json.load(f)['lists'])
@@ -79,11 +86,12 @@ jobs:
         markdown += "|----------|--------------------|\n"
 
         for name in sorted(mods_data.keys(), key=lambda x: x.lower()):
-            versions = list(set(mods_data[name]))
-            # Сортируем с учетом версий Minecraft
+            # Удаляем дубликаты и сортируем версии
+            unique_versions = list(set(mods_data[name]))
+            # Сортируем по убыванию (новые версии первыми)
             sorted_versions = sorted(
-                versions,
-                key=lambda x: version.parse(normalize_version(x)),
+                unique_versions,
+                key=version_key,
                 reverse=True
             )
             versions_str = ", ".join(sorted_versions)
@@ -94,10 +102,9 @@ jobs:
         
         print(f"Generated table with {len(mods_data)} mods")
         print("Sample sorted versions:")
-        sample = {k: sorted(v, key=lambda x: version.parse(normalize_version(x)), reverse=True) 
-                 for k, v in list(mods_data.items())[:5]}
-        for k, v in sample.items():
-            print(f"{k}: {v}")
+        for name in list(mods_data.keys())[:5]:
+            versions = sorted(list(set(mods_data[name])), key=version_key, reverse=True)
+            print(f"{name}: {versions}")
         EOF
 
     - name: Verify and commit changes
