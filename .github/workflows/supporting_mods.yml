@@ -41,6 +41,7 @@ jobs:
         import json
         import os
         from collections import defaultdict
+        from distutils.version import LooseVersion
 
         with open('list.json') as f:
             supported_hashes = set(json.load(f)['lists'])
@@ -63,9 +64,16 @@ jobs:
             except Exception as e:
                 print(f"Skipping {mod_file}: {str(e)}")
 
+        # Сортируем моды по имени
+        sorted_mods = sorted(mods_data.items(), key=lambda x: x[0].lower())
+        
+        # Генерируем таблицу
         markdown = "## Supported Mods\n\n| Mod Name | Supported Versions |\n|----------|--------------------|\n"
-        for name, versions in sorted(mods_data.items()):
-            versions_str = ", ".join(sorted(set(versions)))
+        
+        for name, versions in sorted_mods:
+            # Удаляем дубликаты и сортируем версии в обратном порядке (новые версии первыми)
+            unique_versions = sorted(set(versions), key=LooseVersion, reverse=True)
+            versions_str = ", ".join(unique_versions)
             markdown += f"| {name} | {versions_str} |\n"
 
         with open('SUPPORTED_MODS.md', 'w', encoding='utf-8') as f:
