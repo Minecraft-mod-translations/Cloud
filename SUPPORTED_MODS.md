@@ -21,6 +21,7 @@
 | Compact Crafting | 1.16.5 |
 | Compact Machines | 1.16.5 |
 | CompactStorage | 1.16.5, 1.12.2, 1.7.10 |
+| Computer Craft | 1.7.10 |
 | Construction Wand | 1.16.5 |
 | Create Chunk Loading  | 1.16.5 |
 | Create Stuff & Additions | 1.18.2, 1.16.5 |
