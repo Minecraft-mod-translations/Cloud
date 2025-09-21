@@ -47,6 +47,7 @@
 | Not Enough Wands | 1.16.5 |
 | One Player Sleeping | 1.16.4 - 1.16.5 |
 | Pam's HarvestCraft 2 Food Core | 1.16.5 |
+| Peripherals++ | 1.7.10 |
 | Pineapple Delight | 1.16.5 |
 | Project Expansion | 1.16.5 |
 | Randomium | 1.16.5 |
