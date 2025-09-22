@@ -2,6 +2,7 @@
 
 | Mod Name | Supported Versions | Hashes |
 |----------|--------------------|--------|
+| AIOT Botania | 1.12.2 | d1592f999d99f4ccd2cc292e76035170810f104621a38ee616b56febd720a7bd |
 | Alex's Delight | 1.16.5 | a6b2dba1e533ff8e7a311725bb99cba03c754125eeef857ef6ca4f3b54c73b47 |
 | All The Ores | 1.16.5 | 79b137888a5a999804d55e13a3fcad1c32798e773051227e878303ad78461447 |
 | AllTheOres | 1.16.5 | 64dcd0c9b9e610c149aeaa2a133457bec9d0c2de9c48ba1b172dbef2f3c31abb |
