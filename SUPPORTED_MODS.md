@@ -1,74 +1,74 @@
-## Supported Mods (Newest First)
+## Supported Mods
 
-| Mod Name | Supported Versions |
-|----------|--------------------|
-| Alex's Delight | 1.16.5 |
-| All The Ores | 1.16.5 |
-| AllTheOres | 1.16.5 |
-| Angel Ring 2 | 1.16.5 |
-| AOBD & JAOPCA Ore Chunks | 1.7.10 |
-| Avaritia adons | 1.12.2 |
-| Bigger Stacks | 1.16.5 |
-| Bits And Chisels | 1.16.5 |
-| Botany Pots Tiers | 1.16.5 |
-| Cable Tiers | 1.16.5 |
-| Caged Mobs | 1.18.2, 1.16.5 |
-| Cages Mobs | 1.18.2 |
-| Calculator | 1.7.10 |
-| Cave Generator | 1.16.5 |
-| Cave Rats | 1.16.5 |
-| CC: Tweaked | 1.12.2 |
-| ChestTracker | Fabric 1.16.5 |
-| Chickens | 1.12.2 |
-| Click Machine | 1.16.5 |
-| Compact Crafting | 1.16.5 |
-| Compact Machines | 1.16.5 |
-| CompactStorage | 1.16.5, 1.12.2, 1.7.10 |
-| Computer Craft | 1.7.10 |
-| Construction Wand | 1.16.5 |
-| Create Chunk Loading  | 1.16.5 |
-| Create Stuff & Additions | 1.18.2, 1.16.5 |
-| Cultural Delights | 1.16.5 |
-| Daily Rewards | 1.16.5 |
-| Draconic Additions | 1.16.5 |
-| Easy Villagers | 1.16.5 |
-| EMC Baubles | 1.16.5 |
-| Enchanting Plus | 1.12.2 |
-| End Delight | 1.16.5 |
-| Ender Tanks | 1.12.2 |
-| Extended Caves | 1.16.5 |
-| Extra Utilities 2 | 1.12.2 |
-| FTB Money | 1.16.5 |
-| FTB Structures | 1.16.5 |
-| FTB Teams | 1.16.5 |
-| FTB Ultimine | 1.16.5 |
-| Hatchery | 1.12.2 |
-| Health Canisters | 1.16.5 |
-| Lock | 1.7.10 |
-| Locks | 1.12.2 |
-| Lootr | 1.12.2 |
-| Mob Grinding Utils | 1.20.1, 1.18.2, 1.16.5, 1.12.2 |
-| More Avaritia | 1.12.2 |
-| More Chickens | 1.12.2 |
-| More Mekanism Processing | 1.16.5 |
-| Not Enough Wands | 1.16.5 |
-| One Player Sleeping | 1.16.4 - 1.16.5 |
-| Pam's HarvestCraft 2 Food Core | 1.16.5 |
-| Peripherals++ | 1.7.10 |
-| Pineapple Delight | 1.16.5 |
-| Project Expansion | 1.16.5 |
-| Randomium | 1.16.5 |
-| Rere Skillable Rereforked | 1.16.5 |
-| Roost | 1.12.2 |
-| RS Infinity Booster | 1.16.5 |
-| Time in a bottle standalone | 1.16.5 |
-| Tinker Mechworks | 1.16.5 |
-| Tinkers Levelling Addon | 1.16.5 |
-| Tiny Redstone | 1.16.5 |
-| Tiny Tree | 1.7.10 |
-| Titanium | 1.16.5 |
-| Travel Anchors | 1.16.5 |
-| Twilight Delight | 1.16.5 |
-| Umbral Skies | 1.20.1 |
-| Vacum Chest | 1.16.5 |
-| Wirelees Redstone | 1.16.5 |
+| Mod Name | Supported Versions | Hash |
+|----------|--------------------|------|
+| Alex's Delight | 1.16.5 | a6b2dba1e533ff8e7a311725bb99cba03c754125eeef857ef6ca4f3b54c73b47 |
+| All The Ores | 1.16.5 | 79b137888a5a999804d55e13a3fcad1c32798e773051227e878303ad78461447 |
+| AllTheOres | 1.16.5 | 64dcd0c9b9e610c149aeaa2a133457bec9d0c2de9c48ba1b172dbef2f3c31abb |
+| Angel Ring 2 | 1.16.5 | ae7e755f7b2ad7708cfc771c7fbdd89c22796fa69115868017db9bfbf32f67eb |
+| AOBD & JAOPCA Ore Chunks | 1.7.10 | 0ea22c3bf2096beb2b3f4213f560ff1983730df11c94f5a1f6d37eca177aa09a |
+| Avaritia adons | 1.12.2 | 7792247b7d8ef330d08d9900b78a8b0f1ee3344359ee5954cd3c2e25201aa187 |
+| Bigger Stacks | 1.16.5 | 2b35969a73c65abd63490f6f0db8197b8b7be011edd3b06fa7ef7e52c1afdf97 |
+| Bits And Chisels | 1.16.5 | 804d759bfa6b4b8163c9625e78b20f3f85eac99302d85f6aeccc2e64aed7aa6b |
+| Botany Pots Tiers | 1.16.5 | e3c9792127b7c9d07ab7002c6ce9727093354e9ba30d2844b46e492cf6417f48 |
+| Cable Tiers | 1.16.5 | 0fe74acc3541f8dffe0a28071bab1e3877005aa991e825788abf11346bc07b29 |
+| Caged Mobs | 1.18.2, 1.16.5 | e1318fb9366fb89c625d7670f293699133f6812633efd17511b2e86bfbda7436 |
+| Cages Mobs | 1.18.2 | a2d0582ae43907aa9283cba0d3b636f4ecfdc2986aa5e68ea0b1a98ebc00aecf |
+| Calculator | 1.7.10 | 5f460ff69dfd2df8cc7cf5a806334904639edbafd2660559d6b9dacc03d01664 |
+| Cave Generator | 1.16.5 | 37f2abefd23b2572ef8111c43f9c9a0eb6c1779e2b5ba119acbbd7e3d26784e0 |
+| Cave Rats | 1.16.5 | 3d829a07d8113a297bbf463653b465957d77cb6cdf1c69c38d9b11ba4974e820 |
+| CC: Tweaked | 1.12.2 | f32537175f89ddc9890550a158a910e746cac2848db8f6f123865bd4a8a425fb |
+| ChestTracker | Fabric 1.16.5 | 8453c070ca44cf11d2f2ed2bd38af9640650689b242c671f3fca9cfc82f15e49 |
+| Chickens | 1.12.2 | a640a659f4333d112ee1e677518e71535b5a4ce0e246708e29f489aea10eb947 |
+| Click Machine | 1.16.5 | 8d54f0d40c24f8e2850bd4d7464a2d32a6ceed16de56eeab73f1eb9e3d32598b |
+| Compact Crafting | 1.16.5 | 2f5666d6031879c37e626bd59b367c0394d19b9112cd845c0983fc7d50fa7968 |
+| Compact Machines | 1.16.5 | 2c3ad10b3a27a866166b21ebd6e0fc3367d12227927ce4ea2f7f80105eaad43d |
+| CompactStorage | 1.16.5, 1.12.2, 1.7.10 | eed6c26e712d7f14da8d139645f9bea858acfe4b383b6757ae9cb55eb495a21e |
+| Computer Craft | 1.7.10 | 8b69b73e2a7095ada0c11ad1e98c5a75cc377f1bcd5fec83ca6963bc12290d87 |
+| Construction Wand | 1.16.5 | e522a0db61b285a0ab0d58c2311e3bba09e3bebd056f84bc76f43b76330070c1 |
+| Create Chunk Loading  | 1.16.5 | 5e14877806bb2a9fd28983b084a8671d52daa96cff047dd1ff9a776c8f0048a0 |
+| Create Stuff & Additions | 1.18.2, 1.16.5 | 05bfb0e39ae2ac4468bf70217df788be4692adf4c71bef242d9dba8a39843b0c |
+| Cultural Delights | 1.16.5 | c003b5328038125f0e2b8cb503454e0521f3cbb31e0607877f6121216c30aae7 |
+| Daily Rewards | 1.16.5 | 8882320b40d75139950f1a486a098074fc0323923b9fd3c3a62666fe115c6b14 |
+| Draconic Additions | 1.16.5 | 24dc9322f3c6749d7a74788d9f50b242955970f9d397a1e123c5b0bda90338c6 |
+| Easy Villagers | 1.16.5 | 9ab4501c0d84c8a5a037037ecde391104a769b63dd80e3895a424ab9e686718f |
+| EMC Baubles | 1.16.5 | 0f08613afb5c4265907ba81b11dff346de5d70c106346b6c82802d6e98f5ec8e |
+| Enchanting Plus | 1.12.2 | c50f933ad448d9149d20c5cf95b2bf1a996d2a3e4adc9e98243e166ea3f67628 |
+| End Delight | 1.16.5 | 968a5e798b8a511dbdd4fc1b5a289fef654f005e33fcb07e0593e5c586f53d72 |
+| Ender Tanks | 1.12.2 | a70e5db92e80d93f15230c0a1ec532eb0c4ed140135c0088dd204ca55b949629 |
+| Extended Caves | 1.16.5 | c992a684f27c84883d9193b182d8ee5e8e2e4613bab7f436ac2e071299c203a9 |
+| Extra Utilities 2 | 1.12.2 | 6c1809eb2222604ebf3c051e1c7834b84049013b537633c2e5a1b0077ef9a940 |
+| FTB Money | 1.16.5 | f026768402c9aed167a0256686384266ff2ca5997444bb19ca1f67dcd1efa58c |
+| FTB Structures | 1.16.5 | 8b963c144fdd70883992434d07b9fafa01cbddceba5920a8266ad46ed2f952aa |
+| FTB Teams | 1.16.5 | 29e10b26d1870bf3b11549873d40662600a5f89335a8b689cf04701efaecb428 |
+| FTB Ultimine | 1.16.5 | 3a045ebcdf4ce291022497b1889054d0dd6137075dffc3a3abfc3682fdcf9bee |
+| Hatchery | 1.12.2 | be766981657ae0402169cc058ed6d22e29ee0a086d01a77a3918d4aab2df860a |
+| Health Canisters | 1.16.5 | 40e67762c626c4a52ee39d309fde5c95317f1639471fbf4aeb584529222575d5 |
+| Lock | 1.7.10 | 29c49c1e6a0cae47a5c1ec68f00e35e9aef344ac2dcb31a0837eed54880f0ac5 |
+| Locks | 1.12.2 | cfe162b2c919aef2acf0bc35e5c9124847d95458bba25a1141a1c359be66d809 |
+| Lootr | 1.12.2 | 294d4af16a558f2fca3aa4e3e7234fd7ea005d4aaf53c84b04c92908f9342c2d |
+| Mob Grinding Utils | 1.20.1, 1.18.2, 1.16.5, 1.12.2 | c2be2580e3b2576cab89f87639ad8479747c7b42cca49ca9669fc86ae3df9844 |
+| More Avaritia | 1.12.2 | 81080ce655946fee7ed2df18a8cc697f07ce32e795526ed1baf8cfc041ed513b |
+| More Chickens | 1.12.2 | 23696a3456da5c36556322ae5b5057ed6f5a9703f745be723af5c2f3e6814187 |
+| More Mekanism Processing | 1.16.5 | 946f9d240636fc85371758a09a6d5fe91f7414101c8d7398bb20a20b4a8612cd |
+| Not Enough Wands | 1.16.5 | 628cd30b52aa04a136ed1588ecaa140443150146f17432cdf3796941cbf22d18 |
+| One Player Sleeping | 1.16.4 - 1.16.5 | e7b79b740529278d945231ec65526726aa6d4657d13c85e72589abbf4c8a1a46 |
+| Pam's HarvestCraft 2 Food Core | 1.16.5 | e4414d35013e746e5b06256a08dd957a814b17cebcb035899a84a3692d08b544 |
+| Peripherals++ | 1.7.10 | c65f4afec7f3cdcc69ca4a4ead2298456a4ac3d607987d4a5a69c223b1d5cbb0 |
+| Pineapple Delight | 1.16.5 | f015c822c125d57d81d4cd9da531565310553b873edc3ec81144c21f0d8b9b8e |
+| Project Expansion | 1.16.5 | 56dff1c6e69dcd3ab3621e7b7122997572891a020d24427ad8c675d949353e03 |
+| Randomium | 1.16.5 | 0633475b9d542b5f0c972e0bcfb0e4aebf749c461320a6135a3d2f66777b8edc |
+| Rere Skillable Rereforked | 1.16.5 | b4b385d80ae881ea0083a092f912a01c3c97d6cf50c8f6c579fca7dc7083ef71 |
+| Roost | 1.12.2 | bbca219d89014eb86e5bd5e384597d81773632c38aba3b9ad8d95a2db2cf671b |
+| RS Infinity Booster | 1.16.5 | 13ff33ec89d551945d7381e77195c4c549297350a6b7184b116734b991c42b0b |
+| Time in a bottle standalone | 1.16.5 | 965fced80fc4d4b4aa9e82dfd9b4d6d10ffc05901bcd998e994a64e13040ea92 |
+| Tinker Mechworks | 1.16.5 | 7da9353d8c80df4c72108f8ad4dc8bf601b6ec1a4ce6abc44ce90548b85a3923 |
+| Tinkers Levelling Addon | 1.16.5 | 05f950a3bf6c2459dc07edb22e29511a68e7680bd1533495261b584391e80073 |
+| Tiny Redstone | 1.16.5 | 6c10b7a89602917df4587c26bb63d93802e48ed69b7ad6be9f18f4db8771ddad |
+| Tiny Tree | 1.7.10 | f8552f424d36676f3ed2bdf93d6245c65fb92ddb7d2fc18de6009072d12005c2 |
+| Titanium | 1.16.5 | 77e791b943e7fc570579e483725835a24bdddaced7c28765fe6e8e0da507883f |
+| Travel Anchors | 1.16.5 | aa9e9a21e2796818da45731adb1c6160797a33fdfbec3a391363ec10deb5fce0 |
+| Twilight Delight | 1.16.5 | 6fd73750249bf7dde3a7c465457f19ed8e890196d0f6cd33632361d8af961c95 |
+| Umbral Skies | 1.20.1 | fe8e074cf37b3e192f5bc62aada17f89d92caaa1d3946c695ffc26f2d3b67e1c |
+| Vacum Chest | 1.16.5 | 5bd7b3f6ca85a286ced0fecf7343e19b80494eb1962859f4f8c1d5db70b4f66d |
+| Wirelees Redstone | 1.16.5 | ef5d2cbe78d4ec2ab151c715eb334ddd24f16bbbbf4404beb081e1a37db6cd99 |
