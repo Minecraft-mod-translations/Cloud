@@ -37,6 +37,7 @@
 | End Delight | 1.16.5 |
 | Ender Tanks | 1.12.2 |
 | Extended Caves | 1.16.5 |
+| Extra Utilities 2 | 1.12.2 |
 | FTB Money | 1.16.5 |
 | FTB Structures | 1.16.5 |
 | FTB Teams | 1.16.5 |
