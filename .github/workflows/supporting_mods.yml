@@ -87,27 +87,33 @@ jobs:
                 print(f"Skipping {mod_file}: {str(e)}")
 
         markdown = "## Supported Mods\n\n"
-        markdown += "| Mod Name | Supported Versions | Hash |\n"
-        markdown += "|----------|--------------------|------|\n"
+        markdown += "| Mod Name | Supported Versions | Hashes |\n"
+        markdown += "|----------|--------------------|--------|\n"
 
         for name in sorted(mods_data.keys(), key=lambda x: x.lower()):
-            # Get unique versions and sort by parsed version (newest first)
-            unique_versions = {}
+            # Group hashes by version and sort versions from newest to oldest
+            version_hash_map = {}
             for item in mods_data[name]:
-                ver = item['original']
-                if ver not in unique_versions or item['parsed'] > version_tuple(unique_versions[ver]):
-                    unique_versions[ver] = item['hash']
+                version = item['original']
+                if version not in version_hash_map:
+                    version_hash_map[version] = []
+                version_hash_map[version].append(item['hash'])
             
             # Sort versions from newest to oldest
             sorted_versions = sorted(
-                unique_versions.keys(),
+                version_hash_map.keys(),
                 key=lambda x: version_tuple(x),
                 reverse=True
             )
+            
             versions_str = ", ".join(sorted_versions)
-            # Get the hash for the newest version
-            newest_hash = unique_versions[sorted_versions[0]] if sorted_versions else ""
-            markdown += f"| {name} | {versions_str} | {newest_hash} |\n"
+            # Get all unique hashes for all versions
+            all_hashes = []
+            for version in sorted_versions:
+                all_hashes.extend(version_hash_map[version])
+            hashes_str = ", ".join(sorted(set(all_hashes)))
+            
+            markdown += f"| {name} | {versions_str} | {hashes_str} |\n"
 
         with open('SUPPORTED_MODS.md', 'w', encoding='utf-8') as f:
             f.write(markdown)
