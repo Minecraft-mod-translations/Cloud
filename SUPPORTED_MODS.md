@@ -71,3 +71,4 @@
 | Umbral Skies | 1.20.1 | fe8e074cf37b3e192f5bc62aada17f89d92caaa1d3946c695ffc26f2d3b67e1c |
 | Vacum Chest | 1.16.5 | 5bd7b3f6ca85a286ced0fecf7343e19b80494eb1962859f4f8c1d5db70b4f66d |
 | Wirelees Redstone | 1.16.5 | ef5d2cbe78d4ec2ab151c715eb334ddd24f16bbbbf4404beb081e1a37db6cd99 |
+| Wireless Interface Terminal | 1.12.2 | b7de5fd1825724ddcc73af072bda7727cafd284074b81845e81038c02eb7e134 |
