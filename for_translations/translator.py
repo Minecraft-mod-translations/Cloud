@@ -10,7 +10,7 @@ class TranslatorGUI(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("JAR File Translator")
-        self.setGeometry(100, 100, 400, 100)
+        self.setGeometry(100, 100, 400, 90)
 
         # Default values
         self.name = "RS Infinity Booster"
@@ -70,10 +70,6 @@ class TranslatorGUI(QMainWindow):
         generate_button.clicked.connect(self.run_main)
         layout.addWidget(generate_button)
 
-        clean_button = QPushButton("Clean")
-        clean_button.clicked.connect(self.run_clean)
-        layout.addWidget(clean_button)
-
         layout.addStretch()
 
     def browse_jar_file(self):
@@ -100,6 +96,15 @@ class TranslatorGUI(QMainWindow):
             content = f.read()
         return binascii.hexlify(content).decode('utf-8')
 
+    def run_clean(self):
+        try:
+            jar_file = self.jar_file_input.text()
+            for file in [f"{jar_file}.sha256", "sha256.json"]:
+                if os.path.exists(file):
+                    os.remove(file)
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"An error occurred during cleanup: {str(e)}")
+
     def run_main(self):
         try:
             jar_file = self.jar_file_input.text()
@@ -123,8 +128,6 @@ class TranslatorGUI(QMainWindow):
 
             # Generate SHA256 hash and save to file
             sha256sum = self.generate_sha256(jar_file)
-            with open(f"{jar_file}.sha256", "w") as f:
-                f.write(f"{sha256sum}  {jar_file}\n")
 
             # Convert translated jar to hex
             hex_content = self.file_to_hex(translated_file)
@@ -140,19 +143,10 @@ class TranslatorGUI(QMainWindow):
             with open(f"{sha256sum}.json", "w") as f:
                 json.dump(json_data, f, indent=2)
 
+            self.run_clean()
             QMessageBox.information(self, "Success", "Files generated successfully!")
         except Exception as e:
             QMessageBox.critical(self, "Error", f"An error occurred: {str(e)}")
-
-    def run_clean(self):
-        try:
-            jar_file = self.jar_file_input.text()
-            for file in [f"{jar_file}.sha256", "sha256.json"]:
-                if os.path.exists(file):
-                    os.remove(file)
-            QMessageBox.information(self, "Success", "Cleaned generated files!")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"An error occurred during cleanup: {str(e)}")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
