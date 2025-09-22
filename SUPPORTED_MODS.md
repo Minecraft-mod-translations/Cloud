@@ -17,6 +17,7 @@
 | Calculator | 1.7.10 |
 | Cave Generator | 1.16.5 |
 | Cave Rats | 1.16.5 |
+| CC: Tweaked | 1.12.2 |
 | ChestTracker | Fabric 1.16.5 |
 | Chickens | 1.12.2 |
 | Click Machine | 1.16.5 |
@@ -56,6 +57,7 @@
 | Project Expansion | 1.16.5 |
 | Randomium | 1.16.5 |
 | Rere Skillable Rereforked | 1.16.5 |
+| Roost | 1.12.2 |
 | RS Infinity Booster | 1.16.5 |
 | Time in a bottle standalone | 1.16.5 |
 | Tinker Mechworks | 1.16.5 |
