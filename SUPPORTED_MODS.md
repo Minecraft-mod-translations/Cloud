@@ -7,6 +7,7 @@
 | AllTheOres | 1.16.5 |
 | Angel Ring 2 | 1.16.5 |
 | AOBD & JAOPCA Ore Chunks | 1.7.10 |
+| Avaritia adons | 1.12.2 |
 | Bigger Stacks | 1.16.5 |
 | Bits And Chisels | 1.16.5 |
 | Botany Pots Tiers | 1.16.5 |
@@ -30,6 +31,7 @@
 | Draconic Additions | 1.16.5 |
 | Easy Villagers | 1.16.5 |
 | EMC Baubles | 1.16.5 |
+| Enchanting Plus | 1.12.2 |
 | End Delight | 1.16.5 |
 | Ender Tanks | 1.12.2 |
 | Extended Caves | 1.16.5 |
@@ -37,6 +39,7 @@
 | FTB Structures | 1.16.5 |
 | FTB Teams | 1.16.5 |
 | FTB Ultimine | 1.16.5 |
+| Hatchery | 1.12.2 |
 | Health Canisters | 1.16.5 |
 | Lock | 1.7.10 |
 | Locks | 1.12.2 |
