@@ -47,6 +47,7 @@
 | Locks | 1.12.2 |
 | Lootr | 1.12.2 |
 | Mob Grinding Utils | 1.20.1, 1.18.2, 1.16.5, 1.12.2 |
+| More Avaritia | 1.12.2 |
 | More Chickens | 1.12.2 |
 | More Mekanism Processing | 1.16.5 |
 | Not Enough Wands | 1.16.5 |
