@@ -137,7 +137,7 @@ class TranslatorGUI(QMainWindow):
             }
 
             # Write JSON to file
-            with open("sha256.json", "w") as f:
+            with open(f"{sha256sum}.json", "w") as f:
                 json.dump(json_data, f, indent=2)
 
             QMessageBox.information(self, "Success", "Files generated successfully!")
