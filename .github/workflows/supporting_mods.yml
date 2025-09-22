@@ -80,14 +80,15 @@ jobs:
                             # Store both original and parsed version
                             mods_data[mod_data['name']].append({
                                 'original': mod_data['version'],
-                                'parsed': version_tuple(mod_data['version'])
+                                'parsed': version_tuple(mod_data['version']),
+                                'hash': file_hash
                             })
             except Exception as e:
                 print(f"Skipping {mod_file}: {str(e)}")
 
-        markdown = "## Supported Mods (Newest First)\n\n"
-        markdown += "| Mod Name | Supported Versions |\n"
-        markdown += "|----------|--------------------|\n"
+        markdown = "## Supported Mods\n\n"
+        markdown += "| Mod Name | Supported Versions | Hash |\n"
+        markdown += "|----------|--------------------|------|\n"
 
         for name in sorted(mods_data.keys(), key=lambda x: x.lower()):
             # Get unique versions and sort by parsed version (newest first)
@@ -95,7 +96,7 @@ jobs:
             for item in mods_data[name]:
                 ver = item['original']
                 if ver not in unique_versions or item['parsed'] > version_tuple(unique_versions[ver]):
-                    unique_versions[ver] = item['original']
+                    unique_versions[ver] = item['hash']
             
             # Sort versions from newest to oldest
             sorted_versions = sorted(
@@ -104,7 +105,9 @@ jobs:
                 reverse=True
             )
             versions_str = ", ".join(sorted_versions)
-            markdown += f"| {name} | {versions_str} |\n"
+            # Get the hash for the newest version
+            newest_hash = unique_versions[sorted_versions[0]] if sorted_versions else ""
+            markdown += f"| {name} | {versions_str} | {newest_hash} |\n"
 
         with open('SUPPORTED_MODS.md', 'w', encoding='utf-8') as f:
             f.write(markdown)
@@ -138,7 +141,7 @@ jobs:
         if git diff-index --quiet HEAD --; then
           echo "No changes to commit"
         else
-          git commit -m "Auto-update: Supported Mods Table (fixed version sorting) [skip ci]"
+          git commit -m "Auto-update: Supported Mods Table [skip ci]"
           git pull --rebase
           git push origin HEAD:${{ github.event.inputs.branch || 'main' }}
           echo "Changes pushed successfully"
