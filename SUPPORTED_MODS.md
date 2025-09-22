@@ -18,6 +18,7 @@
 | Cave Generator | 1.16.5 |
 | Cave Rats | 1.16.5 |
 | ChestTracker | Fabric 1.16.5 |
+| Chickens | 1.12.2 |
 | Click Machine | 1.16.5 |
 | Compact Crafting | 1.16.5 |
 | Compact Machines | 1.16.5 |
